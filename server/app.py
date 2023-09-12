@@ -20,9 +20,6 @@ api = Api(app)
 class Plants(Resource):
 
     def get(self):
-        foo = Plant.query.all()
-        for plant in foo:
-            print(f"plant")
         plants = [plant.to_dict() for plant in Plant.query.all()]
         return make_response(jsonify(plants), 200)
 
@@ -47,9 +44,7 @@ api.add_resource(Plants, '/plants')
 class PlantByID(Resource):
 
     def delete(self, id):
-        print(f"id = {id}")
         plant = Plant.query.filter(Plant.id == id).first()
-        print(f"Delete {plant}")
         db.session.delete(plant)
         db.session.commit()
         return make_response("",204)
